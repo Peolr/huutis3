@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/huutis3/static/css/main.e6c13ad2.css",
+    "main.js": "/huutis3/static/js/main.d196dc00.js",
+    "static/js/787.d4aba7ab.chunk.js": "/huutis3/static/js/787.d4aba7ab.chunk.js",
+    "index.html": "/huutis3/index.html",
+    "main.e6c13ad2.css.map": "/huutis3/static/css/main.e6c13ad2.css.map",
+    "main.d196dc00.js.map": "/huutis3/static/js/main.d196dc00.js.map",
+    "787.d4aba7ab.chunk.js.map": "/huutis3/static/js/787.d4aba7ab.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e6c13ad2.css",
+    "static/js/main.d196dc00.js"
+  ]
+}
