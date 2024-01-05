@@ -85,7 +85,40 @@ function Calendar() {
         e.preventDefault();
     
         if (isEditing) {
-            // ... existing code for updating an event ...
+            // Create an object with the updated event data
+            const updatedEvent = {
+                title: selectedEvent.title,
+                start: selectedEvent.start,
+                description: selectedEvent.description,
+                starttime: selectedEvent.starttime,
+                ketatulos: selectedEvent.ketatulos,
+            };
+            const newEvent = {
+                title: selectedEvent.title,
+                start: selectedDate,
+                description: selectedEvent.description,
+                starttime: selectedEvent.starttime,
+                ketatulos: selectedEvent.ketatulos,
+            };
+            fetch(`https://serveri-gopqbrbwda-oe.a.run.app/events/${selectedEvent.id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(updatedEvent),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) throw new Error(data.error);
+                console.log('Success:', data);
+                // Update the event in the events state
+                const updatedEvents = events.map(event => event.id === selectedEvent.id ? {...event, ...updatedEvent} : event);
+                setEvents(updatedEvents);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    
         } else {
             const newEvent = {
                 title: selectedEvent.title,
@@ -95,7 +128,7 @@ function Calendar() {
                 ketatulos: selectedEvent.ketatulos,
             };
     
-            // Send a POST request to the server
+            // Send a POST request to the server to create a new event
             fetch('https://serveri-gopqbrbwda-oe.a.run.app/events', {
                 method: 'POST',
                 headers: {
@@ -114,9 +147,9 @@ function Calendar() {
             .catch((error) => {
                 console.error('Error:', error);
             });
-    
-            setModalVisible(false);
         }
+    
+        setModalVisible(false);
     };
 
     const fetchEvents = async () => {
