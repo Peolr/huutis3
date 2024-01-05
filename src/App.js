@@ -4,6 +4,8 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import fiLocale from '@fullcalendar/core/locales/fi';
 import ReactModal from 'react-modal';
+import './Calendar.css';
+
 ReactModal.setAppElement('#root');
 
 function Calendar() {
@@ -78,35 +80,33 @@ function Calendar() {
     };
 
     const handleEventSubmit = (e) => {
-        console.log('handleEventSubmit')
         e.preventDefault();
     
         if (isEditing) {
-            // ... existing code for updating an event ...
-        } else {
-            const newEvent = {
+            // Update the existing event
+            const updatedEvent = {
                 title: selectedEvent.title,
-                start: selectedDate,
+                start: selectedEvent.start,
                 description: selectedEvent.description,
                 starttime: selectedEvent.starttime,
                 ketatulos: selectedEvent.ketatulos,
             };
     
-            // Send a POST request to the server
-            fetch('https://serveri-gopqbrbwda-oe.a.run.app/events', {
-                method: 'POST',
+            // Send a PUT request to the server
+            fetch(`https://serveri-gopqbrbwda-oe.a.run.app/events/${selectedEvent.id}`, {
+                method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(newEvent),
+                body: JSON.stringify(updatedEvent),
             })
             .then(response => response.json())
             .then(data => {
                 if (data.error) throw new Error(data.error);
-                const createdEvent = data;
-                console.log('Success:', events);
-                const convertedEvents = convertEvents([createdEvent]);
-                setEvents([...events, ...convertedEvents]);
+                console.log('Success:', data);
+                // Update the event in the events state
+                const updatedEvents = events.map(event => event.id === selectedEvent.id ? {...event, ...updatedEvent} : event);
+                setEvents(updatedEvents);
             })
             .catch((error) => {
                 console.error('Error:', error);
