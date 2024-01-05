@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/huutis3/static/css/main.31d8c554.css",
-    "main.js": "/huutis3/static/js/main.9c9b5526.js",
+    "main.js": "/huutis3/static/js/main.15ee8b77.js",
     "static/js/787.d4aba7ab.chunk.js": "/huutis3/static/js/787.d4aba7ab.chunk.js",
     "index.html": "/huutis3/index.html",
     "main.31d8c554.css.map": "/huutis3/static/css/main.31d8c554.css.map",
-    "main.9c9b5526.js.map": "/huutis3/static/js/main.9c9b5526.js.map",
+    "main.15ee8b77.js.map": "/huutis3/static/js/main.15ee8b77.js.map",
     "787.d4aba7ab.chunk.js.map": "/huutis3/static/js/787.d4aba7ab.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.31d8c554.css",
-    "static/js/main.9c9b5526.js"
+    "static/js/main.15ee8b77.js"
   ]
 }
