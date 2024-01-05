@@ -59,6 +59,7 @@ function Calendar() {
         id: event._id,
         title: event.title,
         description: event.description,
+        ketatulos: event.ketatulos,
         start: new Date(event.start), 
         end: new Date(event.start).setHours(new Date(event.start).getHours() + 1), 
     }))};
@@ -80,33 +81,35 @@ function Calendar() {
     };
 
     const handleEventSubmit = (e) => {
+        console.log('handleEventSubmit')
         e.preventDefault();
     
         if (isEditing) {
-            // Update the existing event
-            const updatedEvent = {
+            // ... existing code for updating an event ...
+        } else {
+            const newEvent = {
                 title: selectedEvent.title,
-                start: selectedEvent.start,
+                start: selectedDate,
                 description: selectedEvent.description,
                 starttime: selectedEvent.starttime,
                 ketatulos: selectedEvent.ketatulos,
             };
     
-            // Send a PUT request to the server
-            fetch(`https://serveri-gopqbrbwda-oe.a.run.app/events/${selectedEvent.id}`, {
-                method: 'PUT',
+            // Send a POST request to the server
+            fetch('https://serveri-gopqbrbwda-oe.a.run.app/events', {
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(updatedEvent),
+                body: JSON.stringify(newEvent),
             })
             .then(response => response.json())
             .then(data => {
                 if (data.error) throw new Error(data.error);
-                console.log('Success:', data);
-                // Update the event in the events state
-                const updatedEvents = events.map(event => event.id === selectedEvent.id ? {...event, ...updatedEvent} : event);
-                setEvents(updatedEvents);
+                const createdEvent = data;
+                console.log('Success:', events);
+                const convertedEvents = convertEvents([createdEvent]);
+                setEvents([...events, ...convertedEvents]);
             })
             .catch((error) => {
                 console.error('Error:', error);

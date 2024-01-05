@@ -19,8 +19,8 @@ const eventSchema = new mongoose.Schema({
   title: String,
   start: Date,
   description: String,
-  etatulos: String, // new property
-  starttime: String, // new property
+  ketatulos: String,
+  starttime: String, 
 });
 
 const Event = mongoose.model('Event', eventSchema, 'calendarEvents');
