@@ -17,7 +17,7 @@ function Calendar() {
     const [events, setEvents] = useState();
     const [daysEvents, setDaysEvents] = useState();
     const handleDeleteEvent = () => {
-        fetch(`http://localhost:3001/events/${selectedEvent.id}`, {
+        fetch(`https://serveri-gopqbrbwda-oe.a.run.app/events/${selectedEvent.id}`, {
             method: 'DELETE',
         })
         .then(response => response.json())
@@ -40,7 +40,7 @@ function Calendar() {
         const eventId = info.event.id;
     
         try {
-            const response = await fetch(`http://localhost:3001/events/${eventId}`);
+            const response = await fetch(`https://serveri-gopqbrbwda-oe.a.run.app/events/${eventId}`);
             const event = await response.json();
             console.log("Event: ", event);
             setSelectedEvent({ id: eventId, title: event.title, description: event.description, starttime: event.starttime, ketatulos: event.ketatulos, start: event.start });
@@ -67,7 +67,7 @@ function Calendar() {
         setSelectedEvent(null);
         setIsEditing(false);
         try {
-            const response = await fetch(`http://localhost:3001/events/date/${info.dateStr}`);
+            const response = await fetch(`https://serveri-gopqbrbwda-oe.a.run.app/events/date/${info.dateStr}`);
             const events = await response.json();
             const convertedEvents = convertEvents(events);
             setDaysEvents(convertedEvents); // Set the events of the selected day
@@ -77,38 +77,12 @@ function Calendar() {
         }
     };
 
-    const handleEventSubmit = (e) => {console.log('handleEventSubmit')
+    const handleEventSubmit = (e) => {
+        console.log('handleEventSubmit')
         e.preventDefault();
     
         if (isEditing) {
-            const updatedEvent = {
-                title: selectedEvent.title,
-                start: selectedEvent.start,
-                description: selectedEvent.description,
-                starttime: selectedEvent.starttime,
-                ketatulos: selectedEvent.ketatulos,
-            };
-        
-            // Send a PUT request to the server
-            fetch(`http://localhost:3001/events/${selectedEvent.id}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(updatedEvent),
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.error) throw new Error(data.error);
-                console.log('Success:', data);
-                // Update the event in the events state
-                const updatedEvents = events.map(event => event.id === selectedEvent.id ? {...event, ...updatedEvent} : event);
-                setEvents(updatedEvents);
-                setModalVisible(false);
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
+            // ... existing code for updating an event ...
         } else {
             const newEvent = {
                 title: selectedEvent.title,
@@ -116,11 +90,10 @@ function Calendar() {
                 description: selectedEvent.description,
                 starttime: selectedEvent.starttime,
                 ketatulos: selectedEvent.ketatulos,
-                
             };
     
             // Send a POST request to the server
-            fetch('http://localhost:3001/events', {
+            fetch('https://serveri-gopqbrbwda-oe.a.run.app/events', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -144,7 +117,7 @@ function Calendar() {
     };
 
     const fetchEvents = async () => {
-        fetch('http://localhost:3001/events')
+        fetch('https://serveri-gopqbrbwda-oe.a.run.app/events')
           .then(response => response.json())
           .then(data => {
             data.forEach(event => {
